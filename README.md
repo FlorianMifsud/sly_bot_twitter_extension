@@ -23,11 +23,11 @@ To run this project, you will need to add the following environment variables to
 ```
 
 ```bash
-  pnpm i
+  cd sly_bot_twitter_extension
 ```
 
 ```bash
-  cd sly_bot_twitter_extension
+  pnpm i
 ```
 
 ```bash
