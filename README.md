@@ -20,13 +20,6 @@ To run this project, you will need to add the following environment variables to
 
 ```bash
   git clone https://github.com/FlorianMifsud/sly_bot_twitter_extension.git
-  pnpm i
-  cd sly_bot_twitter_extension
-  pnpm run start
-```
-
-```bash
-  git clone https://github.com/FlorianMifsud/sly_bot_twitter_extension.git
 ```
 
 ```bash
