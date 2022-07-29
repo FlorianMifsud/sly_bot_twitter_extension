@@ -35,6 +35,7 @@ const userClient = new TwitterApi({
 });
 
 function tweet(message: string): void {
+    if (process.env.NODE_ENV === "development") return;
     userClient.v1
         .tweet(message)
         .then(async (data) => {
@@ -79,37 +80,33 @@ async function run(): Promise<unknown> {
                         if (a["c"]["0"] !== null) {
                             if (horaire >= 24) return;
                             horaire++;
-                            for (let i = 0; i < a["c"].length; i++) {
+                            for (let i = 1; i < 8; i++) {
                                 const elem = a["c"][i];
-                                if (i >= 1 && i <= 8) {
-                                    if (
-                                        !prog[
-                                            data_json.table.rows[2].c[i].v
-                                                .replace("\n", " ")
-                                                .split(" ")[1]
-                                        ]
-                                    ) {
-                                        prog[
-                                            data_json.table.rows[2].c[i].v
-                                                .replace("\n", " ")
-                                                .split(" ")[1]
-                                        ] = {};
-                                    }
+                                if (
+                                    !prog[
+                                        data_json.table.rows[2].c[i].v
+                                            .replace("\n", " ")
+                                            .split(" ")[1]
+                                    ]
+                                ) {
                                     prog[
                                         data_json.table.rows[2].c[i].v
                                             .replace("\n", " ")
                                             .split(" ")[1]
-                                    ][parse_horaire(a["c"][0].v)] = undefined;
-                                    if (elem !== null) {
-                                        prog[
-                                            data_json.table.rows[2].c[i].v
-                                                .replace("\n", " ")
-                                                .split(" ")[1]
-                                        ][parse_horaire(a["c"][0].v)] =
-                                            username_to_interface(
-                                                s(elem.v)
-                                            ).NAME; // Permet de renvoyer les pseudos directement
-                                    }
+                                    ] = {};
+                                }
+                                prog[
+                                    data_json.table.rows[2].c[i].v
+                                        .replace("\n", " ")
+                                        .split(" ")[1]
+                                ][parse_horaire(a["c"][0].v)] = undefined;
+                                if (elem !== null) {
+                                    prog[
+                                        data_json.table.rows[2].c[i].v
+                                            .replace("\n", " ")
+                                            .split(" ")[1]
+                                    ][parse_horaire(a["c"][0].v)] =
+                                        username_to_interface(s(elem.v)).NAME; // Permet de renvoyer les pseudos directement
                                 }
                             }
                         }
@@ -192,7 +189,6 @@ https://www.twitch.tv/solary`;
     Last build: ${new Date().toLocaleString()}`,
         });
     }
-
     setInterval(() => {
         run()
             .then(async (data) => {
@@ -200,6 +196,7 @@ https://www.twitch.tv/solary`;
                     { _id: process.env.ID },
                     { PROG: data }
                 );
+
                 const json_data: Data_Interface = await extension.findOne({
                     _id: process.env.ID,
                 });
