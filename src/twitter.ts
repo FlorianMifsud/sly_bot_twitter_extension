@@ -26,9 +26,9 @@ export const parseTweet = function (normalizedText: string): boolean {
     // Go through every character and calculate weight
     for (let charIndex = 0; charIndex < tweetLength; charIndex++) {
         if (urlEntitiesMap[charIndex]) {
-            const { url } = urlEntitiesMap[charIndex];
+            const { text } = urlEntitiesMap[charIndex];
             weightedLength += transformedURLLength * scale;
-            charIndex += url.length - 1;
+            charIndex += text.length - 1;
         } else if (emojiEntitiesMap[charIndex]) {
             const { text: emoji } = emojiEntitiesMap[charIndex];
             weightedLength += defaultWeight;
