@@ -1,7 +1,7 @@
 import { TwitterApi } from "twitter-api-v2";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
-import * as twitter from "twitter-text";
+import { parseTweet } from "./twitter";
 import { Twitch_info_Live, Twitch_VOD } from "./twitch";
 import {
     STREAMER_Interface,
@@ -171,9 +171,9 @@ jeu: ${twitch.game_name}
 ${url}
 https://www.twitch.tv/solary`;
     }
-    const conform = twitter.parseTweet(phrase);
+    const conform = parseTweet(phrase);
     debug(conform);
-    if (conform.valid) {
+    if (conform) {
         tweet(phrase);
     } else {
         send_tweet(STREAMERS, next, twitch, url, true);

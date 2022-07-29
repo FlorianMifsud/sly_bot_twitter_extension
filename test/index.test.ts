@@ -1,6 +1,7 @@
 import * as STREAMER from "../src/streamers";
 import * as fs from "fs";
 import * as snippets from "../src/snippets";
+import * as tweet from "../src/twitter";
 import { equal } from "assert";
 let data;
 const date = new Date("2022 07 28 17:00:00");
@@ -14,6 +15,25 @@ before(function (done) {
             done();
         }
     );
+});
+
+describe("TEST TWEET", () => {
+    it("parse a cjk tweet with an emoji at the end is invalid", () => {
+        const cjkEmojiTweet =
+            "你想到多多多多你想到你想到多多多多你想到你想到多多多多你想到你想到多多多多你想到你想到多多多多你想到你想到多多多多你想到你想到多多多多你想到你想到多多多多你想到你想到多多多多你想到你想到多多多多你想到你想到多多多多你想到你想到多多多多你想到你想到多多多多你想到你想到多多多多你想想👩‍👩‍👧‍👦";
+
+        equal(tweet.parseTweet(cjkEmojiTweet), false);
+    });
+
+    it("parse a valid tweet with 20 family emojis", () => {
+        const familyEmojiTweet = "👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦👩‍👩‍👧‍👦";
+
+        equal(tweet.parseTweet(familyEmojiTweet), true);
+    });
+
+    it("empty tweet should be invalid", () => {
+        equal(tweet.parseTweet(""), false);
+    });
 });
 
 describe("NEXT STREAMER", () => {

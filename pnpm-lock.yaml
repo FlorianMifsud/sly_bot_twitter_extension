@@ -18,8 +18,8 @@ specifiers:
   ts-node: ^10.9.1
   ts-node-dev: ^2.0.0
   tw-irc: ^6.1.3
+  twemoji-parser: ^14.0.0
   twitter-api-v2: ^1.12.3
-  twitter-text: ^3.1.0
   typescript: ^4.7.4
   typescript-eslint: 0.0.1-alpha.0
 
@@ -32,8 +32,8 @@ dependencies:
   mongoose: 6.5.0_supports-color@9.2.2
   supports-color: 9.2.2
   tw-irc: 6.1.3_supports-color@9.2.2
+  twemoji-parser: 14.0.0
   twitter-api-v2: 1.12.3
-  twitter-text: 3.1.0
   typescript: 4.7.4
   typescript-eslint: 0.0.1-alpha.0
 
@@ -49,13 +49,6 @@ devDependencies:
   ts-node-dev: 2.0.0_cyi3jronpmwutj7hw2n2p72xty
 
 packages:
-
-  /@babel/runtime/7.18.9:
-    resolution: {integrity: sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      regenerator-runtime: 0.13.9
-    dev: false
 
   /@cspotcode/source-map-support/0.8.1:
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -553,12 +546,6 @@ packages:
   /concat-map/0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
     dev: true
-
-  /core-js/2.6.12:
-    resolution: {integrity: sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==}
-    deprecated: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
-    requiresBuild: true
-    dev: false
 
   /create-require/1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
@@ -1760,10 +1747,6 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /punycode/1.4.1:
-    resolution: {integrity: sha512-jmYNElW7yvO7TV33CjSmvSiE2yco3bV2czu/OzDKdMNVZQWfxCblURLhf+47syQRBntjfLdd/H0egrzIG+oaFQ==}
-    dev: false
-
   /punycode/2.1.1:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
     engines: {node: '>=6'}
@@ -1784,10 +1767,6 @@ packages:
     dependencies:
       picomatch: 2.3.1
     dev: true
-
-  /regenerator-runtime/0.13.9:
-    resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
-    dev: false
 
   /regexp.prototype.flags/1.4.3:
     resolution: {integrity: sha512-fjggEOO3slI6Wvgjwflkc4NFRCTZAu5CnNfBd5qOMYhWdn67nJBBu34/TkD++eeFmd8C9r9jfXJ27+nSiRkSUA==}
@@ -2127,21 +2106,12 @@ packages:
       - supports-color
     dev: false
 
-  /twemoji-parser/11.0.2:
-    resolution: {integrity: sha512-5kO2XCcpAql6zjdLwRwJjYvAZyDy3+Uj7v1ipBzLthQmDL7Ce19bEqHr3ImSNeoSW2OA8u02XmARbXHaNO8GhA==}
+  /twemoji-parser/14.0.0:
+    resolution: {integrity: sha512-9DUOTGLOWs0pFWnh1p6NF+C3CkQ96PWmEFwhOVmT3WbecRC+68AIqpsnJXygfkFcp4aXbOp8Dwbhh/HQgvoRxA==}
     dev: false
 
   /twitter-api-v2/1.12.3:
     resolution: {integrity: sha512-FM+RmHdVbCKw/KZ99+if4JQyl2Nx5eF/Jl8CNDeV5J/NSnuFgk3bFw1cZHcNusXitxTWIQ0TQFHr1BkgWDz0wQ==}
-    dev: false
-
-  /twitter-text/3.1.0:
-    resolution: {integrity: sha512-nulfUi3FN6z0LUjYipJid+eiwXvOLb8Ass7Jy/6zsXmZK3URte043m8fL3FyDzrK+WLpyqhHuR/TcARTN/iuGQ==}
-    dependencies:
-      '@babel/runtime': 7.18.9
-      core-js: 2.6.12
-      punycode: 1.4.1
-      twemoji-parser: 11.0.2
     dev: false
 
   /type-check/0.4.0:
