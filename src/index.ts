@@ -3,6 +3,7 @@ import * as dotenv from "dotenv";
 import mongoose from "mongoose";
 import { parseTweet } from "./twitter";
 import { Twitch_info_Live, Twitch_VOD } from "./twitch";
+import { app } from "./server/app";
 import {
     STREAMER_Interface,
     Twitch_Interface,
@@ -182,6 +183,11 @@ https://www.twitch.tv/solary`;
 
 (async () => {
     await mongoose.connect(process.env.MONGO_URL);
+    if (process.env.SERVER_WEB === "true") {
+        app.listen(process.env.PORT, () =>
+            info(`Start on ${process.env.PORT}`)
+        );
+    }
     info("start", new Date());
     if (process.env.NODE_ENV !== "development") {
         await userClient.v1.updateAccountProfile({
