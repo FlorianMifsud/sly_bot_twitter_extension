@@ -4,10 +4,7 @@ import mongoose from "mongoose";
 import { extension } from "../../Schema";
 const BRController = Router();
 
-/**
- * Trouve tous les animaux
- */
-BRController.get("/:chatty?", async (req, res) => {
+BRController.get("/:only_secconds?", async (req, res) => {
     await mongoose.connect(process.env.MONGO_URL);
     const json_data = await extension.findOne({
             _id: process.env.ID,
@@ -27,7 +24,7 @@ BRController.get("/:chatty?", async (req, res) => {
         fin_creneau,
         fin_br,
     };
-    if (req.params.chatty) {
+    if (req.params.only_secconds) {
         return res.status(200).json(result.seconds);
     }
 
