@@ -27,7 +27,7 @@ To run this project, you will need to add the following environment variables to
 ```
 
 ```bash
-  pnpm i
+  pnpm i --production
 ```
 
 ```bash
