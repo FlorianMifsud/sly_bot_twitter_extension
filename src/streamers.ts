@@ -1,4 +1,5 @@
 import { STREAMER_Interface } from "./interface";
+import { streamers } from "./Schema";
 
 export const SHARKK: STREAMER_Interface = {
     NAME: "Sharkk",

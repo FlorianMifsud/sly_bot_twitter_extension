@@ -81,7 +81,7 @@ async function run(): Promise<unknown> {
                         if (a["c"]["0"] !== null) {
                             if (horaire >= 24) return;
                             horaire++;
-                            for (let i = 1; i < 8; i++) {
+                            for (let i = 1; i < 9; i++) {
                                 const elem = a["c"][i];
                                 if (
                                     !prog[
@@ -207,7 +207,6 @@ https://www.twitch.tv/solary`;
                     streamer_by_prog = get_streamer_by_prog(data, today);
 
                 let fin_creneau = fin_crenaux(data, today, streamer_by_prog);
-
                 if (s(twitch_info.title) !== s(twitch_info_by_bdd.title)) {
                     info("Titre changé", twitch_info.title);
                     //Titre changé

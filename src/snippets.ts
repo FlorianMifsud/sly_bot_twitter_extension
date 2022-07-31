@@ -53,7 +53,6 @@ export const fin_crenaux = (
     today.setHours(today.getHours() + 1);
     const date = FormatDate(today);
     const hours = today.getHours();
-
     if (typeof data[`${date}`][`${hours}`] === "undefined") {
         return fin_crenaux(data, today, s(streamer));
     }

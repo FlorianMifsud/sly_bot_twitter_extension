@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+mongoose.pluralize(null);
 const { Schema } = mongoose;
 const extension = mongoose.model(
     "extension_data",
@@ -13,5 +14,17 @@ const extension = mongoose.model(
         { timestamps: true }
     )
 );
+const streamers = mongoose.model(
+    "streamer_solary",
+    new Schema(
+        {
+            NAME: { type: String, unique: true },
+            RS: { type: Object },
+            NICKNAME: { type: Array, unique: true },
+            OVERLAY_ID: { type: Array, unique: true },
+        },
+        { timestamps: true }
+    )
+);
 
-export { extension };
+export { extension, streamers };
