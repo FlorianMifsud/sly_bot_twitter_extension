@@ -49,6 +49,7 @@
         "tslint": "eslint ./src/**/*.ts",
         "start": "node dist/index.js",
         "dev": "tsnd --respawn ./src/index.ts",
-        "dev:server": "tsnd --respawn ./src/server/app.ts"
+        "dev:server": "tsnd --respawn ./src/server/app.ts",
+        "deploy": "pm2 deploy production"
     }
 }

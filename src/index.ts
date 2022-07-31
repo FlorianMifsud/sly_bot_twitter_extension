@@ -154,7 +154,7 @@ function send_tweet(
 ) {
     const to_map: Array<STREAMER_Interface> = [...STREAMERS];
     const next_streamer = username_to_interface(next.next_streamer).TWITTER;
-    let phrase = `Actuellement en live ${to_map.map(
+    const phrase = `Actuellement en live ${to_map.map(
         (streamer) => streamer.TWITTER
     )} jusqu'à ${next.switch_hours}h
 ${!too_long ? `Suivi de ${next_streamer}` : ""}
@@ -162,16 +162,6 @@ Titre: ${twitch.title}
 jeu: ${twitch.game_name}
 ${url}
 https://www.twitch.tv/solary`;
-    if (STREAMERS.has(username_to_interface("solary"))) {
-        phrase = `Actuellement en live ${
-            username_to_interface("solary").TWITTER
-        }
-${!too_long ? `Suivi de ${next_streamer}` : ""}
-Titre: ${replace_streamer_in_title(twitch.title, "TWITTER")}
-jeu: ${twitch.game_name}
-${url}
-https://www.twitch.tv/solary`;
-    }
     const conform = parseTweet(phrase);
     debug(conform);
     if (conform) {
