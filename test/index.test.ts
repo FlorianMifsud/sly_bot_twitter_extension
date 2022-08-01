@@ -2,7 +2,6 @@ import * as STREAMER from "../src/streamers";
 import * as fs from "fs";
 import * as snippets from "../src/snippets";
 import * as tweet from "../src/twitter";
-import * as twitch from "../src/twitch";
 import { equal } from "assert";
 let data;
 const date = new Date("2022 07 28 17:00:00");
@@ -34,21 +33,6 @@ describe("TEST TWEET", () => {
 
     it("empty tweet should be invalid", () => {
         equal(tweet.parseTweet(""), false);
-    });
-});
-
-describe("MODO CHECK", () => {
-    it("only !lrb", () => {
-        const command = "!lrb";
-        equal(twitch.command_to_username(command), STREAMER.LRB);
-    });
-    it("parse multiple arg", () => {
-        const command = "!lrb joue renek";
-        equal(twitch.command_to_username(command), STREAMER.LRB);
-    });
-    it("Other command", () => {
-        const command = "!prog";
-        equal(twitch.command_to_username(command), STREAMER.SOLARY);
     });
 });
 
