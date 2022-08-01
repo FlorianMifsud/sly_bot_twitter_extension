@@ -1,8 +1,13 @@
 import Client, { ECommand } from "tw-irc";
-import { Twitch_Interface, Twitch_Last_Vod_Interface } from "./interface";
+import {
+    Twitch_Interface,
+    Twitch_Last_Vod_Interface,
+    STREAMER_Interface,
+} from "./interface";
 import { s, username_to_interface } from "./snippets";
 import { modo_streamer } from "./index";
 import * as d from "debug";
+import { SOLARY } from "./streamers";
 const debug = d.debug("app:debug");
 const info = d.debug("app:info");
 const { Message } = ECommand;
@@ -36,6 +41,15 @@ export async function Twitch_VOD(): Promise<Twitch_Last_Vod_Interface> {
             .catch(reject);
     });
 }
+
+export function command_to_username(message): STREAMER_Interface {
+    const streamer = s(message.split(" ")[0]);
+    const command = username_to_interface(streamer);
+    debug(streamer);
+    if (command !== SOLARY) modo_streamer(command);
+    info(`Modo use ${streamer}`);
+    return command;
+}
 client.on(Message, ({ message, badges }) => {
     if (badges === null) return;
     if (message[0] !== "!") return;
@@ -43,12 +57,7 @@ client.on(Message, ({ message, badges }) => {
         Object.keys(badges).includes("moderator") ||
         Object.keys(badges).includes("broadcaster")
     ) {
-        const streamer = s(message).split(" ")[0];
-        const command = username_to_interface(streamer);
-        debug(streamer);
-        if (s(command.NAME) === s("solary")) return;
-        if (typeof command !== "undefined") modo_streamer(command);
-        info(`Modo use ${streamer}`);
+        command_to_username(message);
     }
 });
 

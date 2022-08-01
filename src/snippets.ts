@@ -1,5 +1,5 @@
 import { STREAMER_Interface } from "./interface";
-import { STREAMERS } from "./streamers";
+import { STREAMERS, SOLARY } from "./streamers";
 import * as d from "debug";
 const get_streamer_by_title = (title: string): Set<STREAMER_Interface> => {
     const get_streamer_by_title_debug = d.debug(
@@ -7,7 +7,7 @@ const get_streamer_by_title = (title: string): Set<STREAMER_Interface> => {
     );
     const string = title.toLowerCase().split(" ");
     const list_streamer: Set<STREAMER_Interface> = new Set();
-    string.map((word) => {
+    string.forEach((word) => {
         word = s(word);
         STREAMERS.map((streamer) => {
             if (s(streamer.NAME) == word) list_streamer.add(streamer);
@@ -24,9 +24,9 @@ const replace_streamer_in_title = (title: string, type: string): string => {
         "snippets:replace_streamer_in_title"
     );
     const string = title.split(" ");
-    string.map((word, i) => {
+    string.forEach((word, i) => {
         word = s(word);
-        STREAMERS.map((streamer) => {
+        STREAMERS.forEach((streamer) => {
             if (s(streamer.NAME) == word) {
                 string[i] = streamer[type.toUpperCase()];
             }
@@ -86,7 +86,7 @@ const username_to_interface = (stream: string): STREAMER_Interface =>
         (streamer) =>
             s(streamer.NAME) === s(stream) ||
             streamer.SURNOM.find((surnom) => s(surnom) === s(stream))
-    ) ?? STREAMERS.find((streamer) => s(streamer.NAME) === s("solary"));
+    ) ?? SOLARY;
 
 const get_streamer_by_prog = (data: unknown, today: Date): string => {
     const get_streamer_by_prog_debug = d.debug("snippets:get_streamer_by_prog");
