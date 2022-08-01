@@ -158,7 +158,7 @@ function send_tweet(
         (streamer) => streamer.TWITTER
     )} jusqu'à ${next.switch_hours}h
 ${!too_long ? `Suivi de ${next_streamer}` : ""}
-Titre: ${twitch.title}
+Titre: ${replace_streamer_in_title(twitch.title, "TWITTER")}
 jeu: ${twitch.game_name}
 ${url}
 https://www.twitch.tv/solary`;
