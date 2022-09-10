@@ -206,23 +206,6 @@ Last build: ${new Date().toLocaleString()}`,
                     url_vod = await get_url_vod(),
                     url = url_vod ?? "",
                     streamer_by_prog = get_streamer_by_prog(data, today);
-                const debug_tweet: Set<STREAMER_Interface> = new Set();
-                debug_tweet.add(username_to_interface("narkuss"));
-                debug_tweet.add(username_to_interface("solary"));
-                debug_tweet.add(username_to_interface("wakz"));
-                debug_tweet.add(username_to_interface("lrb"));
-                send_tweet(
-                    debug_tweet,
-                    {
-                        today: today,
-                        current_streamer: "solary",
-                        switch_hours: 0,
-                        next_streamer: "solary",
-                    },
-                    twitch_info,
-                    url,
-                    false
-                );
                 let fin_creneau = fin_crenaux(data, today, streamer_by_prog);
 
                 if (s(twitch_info.title) !== s(twitch_info_by_bdd.title)) {
