@@ -9,7 +9,7 @@ const get_streamer_by_title = (title: string): Set<STREAMER_Interface> => {
     const list_streamer: Set<STREAMER_Interface> = new Set();
     string.forEach((word) => {
         word = s(word);
-        STREAMERS.map((streamer) => {
+        STREAMERS.forEach((streamer) => {
             if (s(streamer.NAME) == word) list_streamer.add(streamer);
             if (streamer.SURNOM.find((surnom) => s(surnom) === word)) {
                 list_streamer.add(streamer);
@@ -19,6 +19,7 @@ const get_streamer_by_title = (title: string): Set<STREAMER_Interface> => {
     get_streamer_by_title_debug(list_streamer);
     return list_streamer;
 };
+
 const replace_streamer_in_title = (title: string, type: string): string => {
     const replace_streamer_in_title_debug = d.debug(
         "snippets:replace_streamer_in_title"

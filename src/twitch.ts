@@ -21,7 +21,9 @@ export async function Twitch_info_Live(): Promise<Twitch_Interface> {
             },
         })
             .then((json) => json.json())
-            .then((data) => resolve(data.data[0]))
+            .then((data) => {
+                resolve(data.data[0]);
+            })
             .catch(reject);
     });
 }

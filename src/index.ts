@@ -1,7 +1,7 @@
 import { TwitterApi } from "twitter-api-v2";
 import * as dotenv from "dotenv";
 import mongoose from "mongoose";
-import { parseTweet } from "./twitter";
+//import { parseTweet } from "./twitter";
 import { Twitch_info_Live, Twitch_VOD } from "./twitch";
 import {
     STREAMER_Interface,
@@ -22,6 +22,8 @@ import {
 } from "./snippets";
 import * as d from "debug";
 import { extension } from "./Schema";
+import { canTweet } from "@mrlerandom/can-tweet";
+import { STREAMERS, NARKUSS, SOLARY } from "./streamers";
 dotenv.config();
 const error = d.debug("app:error");
 const info = d.debug("app:info");
@@ -52,6 +54,7 @@ function tweet(message: string): void {
 async function run(): Promise<unknown> {
     return new Promise<unknown>((resolve, reject) => {
         const remove = [0, 1, 2, 27, 28, 29, 30, 31, 32];
+        const day_row = 1;
         fetch(
             "https://docs.google.com/spreadsheets/d/1yCaPsXrHvbpr6vmw5431WX7nbmU6Oplzf6oa5YFGk1w/gviz/tq?"
         )
@@ -74,6 +77,7 @@ async function run(): Promise<unknown> {
 
                 let horaire = 0;
                 const prog = {};
+                //console.log(data_json.table.rows[1]);
 
                 data_json.table.rows.map((a: Array<string>, b: number) => {
                     if (remove.indexOf(b) === -1) {
@@ -82,27 +86,28 @@ async function run(): Promise<unknown> {
                             horaire++;
                             for (let i = 1; i < 9; i++) {
                                 const elem = a["c"][i];
+                                //console.log(elem);
                                 if (
                                     !prog[
-                                        data_json.table.rows[2].c[i].v
+                                        data_json.table.rows[day_row].c[i].v
                                             .replace("\n", " ")
                                             .split(" ")[1]
                                     ]
                                 ) {
                                     prog[
-                                        data_json.table.rows[2].c[i].v
+                                        data_json.table.rows[day_row].c[i].v
                                             .replace("\n", " ")
                                             .split(" ")[1]
                                     ] = {};
                                 }
                                 prog[
-                                    data_json.table.rows[2].c[i].v
+                                    data_json.table.rows[day_row].c[i].v
                                         .replace("\n", " ")
                                         .split(" ")[1]
                                 ][parse_horaire(a["c"][0].v)] = undefined;
                                 if (elem !== null) {
                                     prog[
-                                        data_json.table.rows[2].c[i].v
+                                        data_json.table.rows[day_row].c[i].v
                                             .replace("\n", " ")
                                             .split(" ")[1]
                                     ][parse_horaire(a["c"][0].v)] =
@@ -161,7 +166,7 @@ Titre: ${replace_streamer_in_title(twitch.title, "TWITTER")}
 jeu: ${twitch.game_name}
 ${url}
 https://www.twitch.tv/solary`;
-    const conform = parseTweet(phrase);
+    const conform = canTweet(phrase);
     debug(conform);
     if (conform) {
         tweet(phrase);
@@ -173,12 +178,14 @@ https://www.twitch.tv/solary`;
 (async () => {
     await mongoose.connect(process.env.MONGO_URL);
     info("start", new Date());
+
     if (process.env.NODE_ENV !== "development") {
         await userClient.v1.updateAccountProfile({
             description: `Bot qui permet de savoir qui est sur la TV1 de Solary
-    Last build: ${new Date().toLocaleString()}`,
+Last build: ${new Date().toLocaleString()}`,
         });
     }
+
     setInterval(() => {
         run()
             .then(async (data) => {
@@ -190,7 +197,7 @@ https://www.twitch.tv/solary`;
                 const json_data: Data_Interface = await extension.findOne({
                     _id: process.env.ID,
                 });
-                //prog_by_bdd = json_data.PROG,
+
                 const modo_by_bdd: STREAMER_Interface = json_data.MODO_INFO,
                     twitch_info_by_bdd = json_data.TWITCH_INFO,
                     current_streamer_by_bdd = json_data.STREAMER,
@@ -199,8 +206,25 @@ https://www.twitch.tv/solary`;
                     url_vod = await get_url_vod(),
                     url = url_vod ?? "",
                     streamer_by_prog = get_streamer_by_prog(data, today);
-
+                const debug_tweet: Set<STREAMER_Interface> = new Set();
+                debug_tweet.add(username_to_interface("narkuss"));
+                debug_tweet.add(username_to_interface("solary"));
+                debug_tweet.add(username_to_interface("wakz"));
+                debug_tweet.add(username_to_interface("lrb"));
+                send_tweet(
+                    debug_tweet,
+                    {
+                        today: today,
+                        current_streamer: "solary",
+                        switch_hours: 0,
+                        next_streamer: "solary",
+                    },
+                    twitch_info,
+                    url,
+                    false
+                );
                 let fin_creneau = fin_crenaux(data, today, streamer_by_prog);
+
                 if (s(twitch_info.title) !== s(twitch_info_by_bdd.title)) {
                     info("Titre changé", twitch_info.title);
                     //Titre changé
